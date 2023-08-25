@@ -171,25 +171,29 @@
                                                     <div class="card-body">
                                                         <div class="account-settings">
                                                             <div class="user-profile">
-                                                                <div class="col-23 col-12">
-                                                                    <a data-toggle="modal" data-target="#userAvatarModal">
-                                                                        <img class="profile-user-img img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%; height: auto;">
-                                                                    </a>
-                                                                    <div class="modal fade" id="userAvatarModal" tabindex="-1" role="dialog" aria-labelledby="userAvatarModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-body">
-                                                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%;">
-                                                                                </div>
+                                                                <a data-toggle="modal" data-target="#userAvatarModal">
+                                                                    <img class="profile-user-img img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%; height: auto;">
+                                                                </a>
+                                                                <!-- Modal for displaying the larger image -->
+                                                                <div class="modal fade" id="userAvatarModal" tabindex="-1" role="dialog" aria-labelledby="userAvatarModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%;">
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#changePictureModal">Change Picture</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div><br>
+                                                                </div>
+                                                                <br><br>
                                                                 <h5 class="user-name text-center">Yuki Hayashi</h5>
                                                                 <h6 class="user-email text-center">yuki@Maxwell.com</h6>
                                                             </div>
                                                             <div class="about">
-                                                                <h5 class="mb-2 text-primary text-center">About</h5>
+                                                                <h5 class="mb-2 text-primary">About</h5>
                                                                 <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
                                                             </div>
                                                         </div>
@@ -205,62 +209,57 @@
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="fullName">Full Name</label>
-                                                                    <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
+                                                                    <label for="namalengkap">Nama Lengkap</label>
+                                                                    <input type="text" class="form-control" id="namalengkap" placeholder="Nama Lengkap">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="eMail">Email</label>
-                                                                    <input type="email" class="form-control" id="eMail" placeholder="Enter email ID">
+                                                                    <label for="jeniskelamin">Jenis Kelamin</label>
+                                                                    <input type="text" class="form-control" id="jeniskelamin" placeholder="Jenis Kelamin">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="phone">Phone</label>
-                                                                    <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+                                                                    <label for="JabatanFungsional">Jabatan Fungsional</label>
+                                                                    <input type="text" class="form-control" id="JabatanFungsional" placeholder="Jabatan Fungsional">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="website">Website URL</label>
-                                                                    <input type="url" class="form-control" id="website" placeholder="Website url">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row gutters">
-                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                                <h6 class="mb-3 text-primary">Address</h6>
-                                                            </div>
-                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                                <div class="form-group">
-                                                                    <label for="Street">Street</label>
-                                                                    <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                                                                    <label for="nip">NIP</label>
+                                                                    <input type="text" class="form-control" id="nip" placeholder="NIP">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="ciTy">City</label>
-                                                                    <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+                                                                    <label for="tempat">Tempat Lahir</label>
+                                                                    <input type="text" class="form-control" id="tempat" placeholder="Tempat Lahir">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="sTate">State</label>
-                                                                    <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                                                                    <label for="tanggallahir">Tanggal Lahir</label>
+                                                                    <input type="date" class="form-control" id="tanggallahir" placeholder="Tanggal Lahir">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
-                                                                    <label for="zIp">Zip Code</label>
-                                                                    <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                                                                    <label for="nohp">No Telp</label>
+                                                                    <input type="text" class="form-control" id="nohp" placeholder="No Telp">
+                                                                </div>
+                                                            </div>
+                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="bidKeahlian">Bidang Keahlian</label>
+                                                                    <input type="text" class="form-control" id="bidKeahlian" placeholder="Bidang Keahlian">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row gutters">
                                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                                 <div class="text-right">
-                                                                    <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                                                                    <a type="button" id="submit" name="submit" class="btn btn-secondary" href="dosen.php">Cancel</a>
                                                                     <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </div>
