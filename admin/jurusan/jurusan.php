@@ -177,6 +177,10 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title">Nama Jurusan 1</h5>
                                                             <p class="card-text">Deskripsi singkat tentang jurusan ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang jurusan ini.</p>
+                                                            <div style="position: absolute; bottom: 20px; right: 20px;">
+                                                                <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                                <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -192,6 +196,10 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title">Nama Jurusan 2</h5>
                                                             <p class="card-text">Deskripsi singkat tentang jurusan ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang jurusan ini.</p>
+                                                            <div style="position: absolute; bottom: 20px; right: 20px;">
+                                                                <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                                <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
