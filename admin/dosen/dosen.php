@@ -160,7 +160,7 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Fakultas</h3>
+                                    <h3 class="card-title">Dosen</h3>
                                 </div>
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-striped">
@@ -190,7 +190,7 @@
                                                 <td>Jakarta, 01 Januari 1980</td>
                                                 <td>Laki-laki</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-success">
+                                                    <a href="detail.php" class="btn btn-success">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-info">
