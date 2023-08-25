@@ -178,6 +178,10 @@
                                                             <h5 class="card-title">Nama Fakultas 1</h5>
                                                             <p class="card-text">Deskripsi singkat tentang fakultas ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang fakultas ini.</p>
                                                         </div>
+                                                        <div style="position: absolute; bottom: 20px; right: 20px;">
+                                                            <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                            <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -192,6 +196,10 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title">Nama Fakultas 2</h5>
                                                             <p class="card-text">Deskripsi singkat tentang fakultas ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang fakultas ini.</p>
+                                                        </div>
+                                                        <div style="position: absolute; bottom: 20px; right: 20px;">
+                                                            <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                            <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

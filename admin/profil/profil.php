@@ -197,27 +197,27 @@
                                         <!-- /.col -->
                                         <div class="col-sm-4 col-6">
                                             <div class="row">
-                                                <div class="col">Nama:</div>
+                                                <div class="col"><strong>Nama:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">Tempat/Tanggal Lahir:</div>
+                                                <div class="col"><strong>Tempat/Tanggal Lahir:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">Alamat:</div>
+                                                <div class="col"><strong>Alamat:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">Jenis Kelamin:</div>
+                                                <div class="col"><strong>Jenis Kelamin:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">Agama:</div>
+                                                <div class="col"><strong>Agama:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">Status:</div>
+                                                <div class="col"><strong>Status:</strong></div>
                                                 <div class="col-sm-6">Lorem Ipsum</div>
                                             </div>
                                         </div>
