@@ -307,15 +307,22 @@
     <script src="../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../backend/app/dist/js/pages/dashboard2.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQqCVzh9CHvZAJrfAoR-mVZD-dZxap2Xo&callback=initMap" async defer></script>
     <script>
-        var map = L.map('map').setView([0.47697761062940236, 101.38042941536337], 100);
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 0.47634959444839176, lng: 101.38091487979919},
+                zoom: 20
+            });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            var infowindow = new google.maps.InfoWindow({
+                content: '<b>Universitas Riau Panam</b><br>Lokasi Universitas Riau Panam.'
+            });
 
-        L.marker([0.47697761062940236, 101.38042941536337]).addTo(map)
-            .bindPopup("<b>Universitas Riau Panam</b><br>Lokasi Universitas Riau Panam.");
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

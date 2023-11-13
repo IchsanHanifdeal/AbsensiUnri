@@ -183,7 +183,6 @@
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#changePictureModal">Change Picture</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -191,10 +190,6 @@
                                                                 <br><br>
                                                                 <h5 class="user-name text-center">Yuki Hayashi</h5>
                                                                 <h6 class="user-email text-center">yuki@Maxwell.com</h6>
-                                                            </div>
-                                                            <div class="about">
-                                                                <h5 class="mb-2 text-primary">About</h5>
-                                                                <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,8 +254,7 @@
                                                         <div class="row gutters">
                                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                                 <div class="text-right">
-                                                                    <a type="button" id="submit" name="submit" class="btn btn-secondary" href="dosen.php">Cancel</a>
-                                                                    <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                                                    <a type="button" id="submit" name="submit" class="btn btn-secondary" href="dosen.php">Close</a>
                                                                 </div>
                                                             </div>
                                                         </div>
