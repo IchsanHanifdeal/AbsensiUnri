@@ -1,3 +1,39 @@
+<?php 
+session_start();
+include '../backend/koneksi.php'; 
+$username = $_SESSION['username'];
+
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+
+
+$sqlFakultas = "SELECT COUNT(*) as total_fakultas FROM fakultas";
+$resultFakultas = mysqli_query($conn, $sqlFakultas);
+$rowFakultas = mysqli_fetch_assoc($resultFakultas);
+$jumlahFakultas = $rowFakultas['total_fakultas'];
+
+$sqlJurusan = "SELECT COUNT(*) as total_jurusan FROM jurusan";
+$resultJurusan = mysqli_query($conn, $sqlJurusan);
+$rowJurusan = mysqli_fetch_assoc($resultJurusan);
+$jumlahJurusan = $rowJurusan['total_jurusan'];
+
+$sqlMatakuliah = "SELECT COUNT(*) as total_matakuliah FROM matakuliah";
+$resultMatakuliah = mysqli_query($conn, $sqlMatakuliah);
+$rowMatakuliah = mysqli_fetch_assoc($resultMatakuliah);
+$jumlahMatakuliah = $rowMatakuliah['total_matakuliah'];
+
+$sqlDosen = "SELECT COUNT(*) as total_dosen FROM dosen";
+$resultDosen = mysqli_query($conn, $sqlDosen);
+$rowDosen = mysqli_fetch_assoc($resultDosen);
+$jumlahDosen = $rowDosen['total_dosen'];
+
+$sqlMahasiswa = "SELECT COUNT(*) as total_mahasiswa FROM mahasiswa";
+$resultMahasiswa = mysqli_query($conn, $sqlMahasiswa);
+$rowMahasiswa = mysqli_fetch_assoc($resultMahasiswa);
+$jumlahMahasiswa = $rowMahasiswa['total_mahasiswa'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,18 +76,15 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../backend/app/index3.html" class="brand-link">
-                <img src="../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="dashboard.php" class="brand-link">
+                <img src="../uploads/<?php echo $foto_profil ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
-            <!-- Sidebar -->
             <div class="sidebar">
 
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class-->
                         <nav class="mt-2">
                             <li class="nav-item menu-open">
                                 <a href="Dashboard.php" class="nav-link active">
@@ -70,39 +103,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="fakultas/fakultas.php" class="nav-link">
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="jurusan/jurusan.php" class="nav-link">
@@ -129,7 +135,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="Logout.php" class="nav-link">
+                                <a href="../backend/logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -170,10 +176,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Fakultas</span>
-                                    <span class="info-box-number">
-                                        10
-                                        <small>%</small>
-                                    </span>
+                                    <span class="info-box-number"><?php echo $jumlahFakultas ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -186,7 +189,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Jurusan</span>
-                                    <span class="info-box-number">41,410</span>
+                                    <span class="info-box-number"><?php echo $jumlahJurusan; ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -202,8 +205,8 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-graduation-cap"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Prodi</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-text">Mata Kuliah</span>
+                                    <span class="info-box-number"><?php echo $jumlahMatakuliah ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -216,7 +219,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Dosen</span>
-                                    <span class="info-box-number">2,000</span>
+                                    <span class="info-box-number"><?php echo $jumlahDosen; ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -229,7 +232,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Mahasiswa</span>
-                                    <span class="info-box-number">2,000</span>
+                                    <span class="info-box-number"><?php echo $jumlahMahasiswa ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>

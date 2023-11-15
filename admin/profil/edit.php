@@ -1,3 +1,19 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username'];
+$status = $_SESSION['role'];
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$id_admin = $row['id_admin'];
+$foto_profil = $row['foto_profil'];
+$nama = $row['nama'];
+$tempat = $row['tempat'];
+$alamat = $row['alamat'];
+$tanggal_lahir = $row['tanggal_lahir'];
+$jeniskelamin = $row['jenis_kelamin'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +32,9 @@
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+
 
 </head>
 
@@ -40,9 +59,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="../dashboard.php" class="brand-link">
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -72,36 +91,9 @@
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
-                                        Fakultas
-                                        <i class="fas fa-angle-left right"></i>
+                                        Fakultas          
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="../jurusan/jurusan.php" class="nav-link">
@@ -128,7 +120,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -169,74 +161,94 @@
                                     <div class="row">
                                         <div class="col-sm-3 col-6">
                                             <a data-toggle="modal" data-target="#profilePictureModal">
-                                                <img class="profile-user-img img-fluid" src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt="User profile picture" style="width: 100%; height: auto;">
+                                                <img class="profile-user-img img-fluid" src="../../uploads/<?php echo $foto_profil; ?>" alt="User profile picture" style="width: 100%; height: auto;">
                                             </a>
+                                            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#changeProfilePictureModal">
+                                                Ganti Foto Profil
+                                            </button>
                                             <!-- Modal for displaying the larger image -->
                                             <div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <img src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt="User profile picture" style="max-width: 100%;">
+                                                        <div class="modal-body text-center">
+                                                            <img src="../../uploads/<?php echo $foto_profil; ?>" alt="User profile picture" style="max-width: 100%;">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form id="profilePictureForm" enctype="multipart/form-data" action="upload.php" method="POST">
-                                                <input type="file" name="profilePicture" id="profilePictureInput" style="display: none;">
-                                                <button type="button" class="btn btn-primary mt-2" onclick="document.getElementById('profilePictureInput').click()">Ganti Gambar</button>
-                                            </form>
+                                            <!-- Modal for changing profile picture -->
+                                            <div class="modal fade" id="changeProfilePictureModal" tabindex="-1" role="dialog" aria-labelledby="changeProfilePictureModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="changeProfilePictureModalLabel">Ganti Foto Profil</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="changeProfilePictureForm" enctype="multipart/form-data" action="" method="POST">
+                                                                <input type="file" name="newProfilePicture" id="newProfilePictureInput" style="display: none;" accept="image/*" onchange="displayNewFileName()">
+                                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('newProfilePictureInput').click()">Pilih Foto Baru</button>
+                                                                <img id="newProfilePicturePreview" class="mt-2" style="max-width: 100%; display: none;">
+                                                                <span id="newProfilePictureFileName" class="mt-2" style="display: none;"></span>
+                                                                <button type="submit" class="btn btn-success">Simpan</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 col-6">
-                                            <form>
+                                        <div class="col-sm-8 col-12">
+                                            <form method="POST" action="">
                                                 <div class="row">
                                                     <div class="col">Nama:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10">
+                                                        <input name="nama" type="text" class="form-control" value="<?php echo $nama; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">Tempat:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10 mt-2">
+                                                        <input name="tempat" type="text" class="form-control" value="<?php echo $tempat; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">Tanggal Lahir:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="date" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10 mt-2">
+                                                        <input name="tanggal_lahir" type="date" class="form-control" value="<?php echo $tanggal_lahir; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">Alamat:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10 mt-2">
+                                                        <input name="alamat" type="text" class="form-control" value="<?php echo $alamat; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">Jenis Kelamin:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">Agama:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10 mt-2">
+                                                        <select name="jeniskelamin" class="form-control">
+                                                            <option value="Laki-laki" <?php echo ($jeniskelamin == 'laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                                            <option value="Perempuan" <?php echo ($jeniskelamin == 'perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                                                            <option value="Lainnya" <?php echo ($jeniskelamin == 'undefined') ? 'selected' : ''; ?>>Lainnya</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">Status:</div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" value="Lorem Ipsum">
+                                                    <div class="col-sm-10 mt-2">
+                                                        <input type="text" class="form-control" value="<?php echo $status; ?>" readonly>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
-                                                <a class="btn btn-secondary mt-3" href="profil.php">Batal</a>
+                                                <div class="button-container text-right">
+                                                    <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                                                    <a class="btn btn-secondary mt-3 ml-2" href="profil.php">Batal</a>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -271,12 +283,98 @@
     <script src="../../backend/app/dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
-
+    
     <!-- AdminLTE for demo purposes -->
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
 
+    <script>
+    function displayNewFileName() {
+        var input = document.getElementById('newProfilePictureInput');
+        var fileNameContainer = document.getElementById('newProfilePictureFileName');
+        var previewImage = document.getElementById('newProfilePicturePreview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+
+            fileNameContainer.textContent = input.files[0].name;
+            fileNameContainer.style.display = 'block';
+        }
+    }    
+    </script>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $foto_profil = $_FILES['newProfilePicture']['name'];
+    $tmp_name = $_FILES['newProfilePicture']['tmp_name'];
+
+    if ($_FILES['newProfilePicture']['error'] === 0) {
+        $newProfilePicturePath = '../../uploads/' . basename($foto_profil);
+
+        if (move_uploaded_file($tmp_name, $newProfilePicturePath)) {
+            $ambil = $conn->query("SELECT `foto_profil` FROM admin WHERE id_admin = '$id_admin'");
+            $tampil = $ambil->fetch_assoc();
+            $oldProfilePicturePath = $tampil['foto_profil'];
+
+            if ($oldProfilePicturePath && file_exists($oldProfilePicturePath)) {
+                unlink($oldProfilePicturePath);
+            }
+
+            $updateQuery = "UPDATE admin SET foto_profil = '$foto_profil' WHERE id_admin = '$id_admin'";
+            $updateResult = mysqli_query($conn, $updateQuery);
+
+            if ($updateResult) {
+                header("Location: profil.php");
+                exit();
+            } else {
+                echo "Error: " . $updateQuery . "<br>" . mysqli_error($conn);
+            }
+        } else {
+            echo "Failed to upload the profile picture.";
+        }
+    } else {
+        echo "Tidak ada file gambar yang dipilih atau terjadi kesalahan.";
+    }
+}
+?>
+<?php 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama = $_POST['nama'];
+    $tempat = $_POST['tempat'];
+    $tanggal_lahir = $_POST['tanggal_lahir'];
+    $alamat = $_POST['alamat'];
+    $jeniskelamin = $_POST['jeniskelamin'];
+
+    $update_query = "UPDATE admin SET nama='$nama', tempat='$tempat', tanggal_lahir='$tanggal_lahir', alamat='$alamat', jenis_kelamin='$jeniskelamin' WHERE id_admin=$id_admin";
+    $update_result = mysqli_query($conn, $update_query);
+
+    if ($update_result) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Profil berhasil diperbarui.',
+                    showConfirmButton: false,
+                    timer: 3000
+                }).then(function() {
+                    window.location.href = 'profil.php';
+                });
+             </script>";
+    } else {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal memperbarui profil. Silakan coba lagi.',
+                });
+             </script>";
+    }
+}
+
+?>
 </body>
 
 </html>

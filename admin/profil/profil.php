@@ -1,3 +1,19 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username'];
+$status = $_SESSION['role'];
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$id_admin = $row['id_admin'];
+$foto_profil = $row['foto_profil'];
+$nama = $row['nama'];
+$tempat = $row['tempat'];
+$alamat = $row['alamat'];
+$tanggal_lahir = $row['tanggal_lahir'];
+$jeniskelamin = $row['jenis_kelamin'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,9 +56,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="../dashboard.php" class="brand-link">
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -70,39 +86,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="../fakultas/fakultas.php" class="nav-link">
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="../jurusan/jurusan.php" class="nav-link">
@@ -129,7 +118,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -181,44 +170,40 @@
                                     <div class="row">
                                         <div class="col-sm-3 col-6">
                                             <a data-toggle="modal" data-target="#profilePictureModal">
-                                                <img class="profile-user-img img-fluid" src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt="User profile picture" style="width: 100%; height: auto;">
+                                                <img class="profile-user-img img-fluid" src="../../uploads/<?php echo $foto_profil; ?>" alt="User profile picture" style="width: 100%; height: auto;">
                                             </a>
                                             <!-- Modal for displaying the larger image -->
                                             <div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <img src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt="User profile picture" style="max-width: 100%;">
+                                                        <div class="modal-body text-center">
+                                                            <img src="../../uploads/<?php echo $foto_profil; ?>" alt="User profile picture" style="max-width: 100%;">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 col-6">
+                                        <div class="col-sm-6 col-6">
                                             <div class="row">
                                                 <div class="col"><strong>Nama:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
+                                                <div class="col-sm-6"><?php echo $nama ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col"><strong>Tempat/Tanggal Lahir:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
+                                                <div class="col-sm-6"><?php echo $tempat ."/". $tanggal_lahir; ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col"><strong>Alamat:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
+                                                <div class="col-sm-6"><?php echo $alamat ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col"><strong>Jenis Kelamin:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col"><strong>Agama:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
+                                                <div class="col-sm-6"><?php echo $jeniskelamin ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col"><strong>Status:</strong></div>
-                                                <div class="col-sm-6">Lorem Ipsum</div>
+                                                <div class="col-sm-6"><?php echo $status ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -227,7 +212,7 @@
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <a href="edit.php?" class="btn btn-success float-right">
+                                    <a href="edit.php?id_admin=<?php echo "$id_admin"?>" class="btn btn-success float-right">
                                         <i class="fas fa-pen"></i> Edit
                                     </a>
                                 </div>
@@ -268,6 +253,13 @@
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+
+    <script>
+    var imageElement = document.getElementById('fakultasImage');
+    imageElement.onerror = function() {
+        imageElement.src = "../../uploads/error.png";
+    };
+    </script>
 
 </body>
 

@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'absensifmipa';
+$database = 'absensi';
 
 $conn = new mysqli($host, $username, $password, $database);
 

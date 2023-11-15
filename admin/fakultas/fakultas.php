@@ -1,10 +1,22 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username']; 
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+$sqlf = "SELECT * FROM fakultas";
+$resultf = mysqli_query($conn, $sqlf);
+$rowf = mysqli_fetch_assoc($resultf);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin | Profil</title>
+    <title>Admin | Fakultas</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
@@ -40,9 +52,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="../dashboard.php" class="brand-link">
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -73,35 +85,8 @@
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link active">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="../jurusan/jurusan.php" class="nav-link">
@@ -128,7 +113,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -167,48 +152,35 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card mb-3">
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kNGVJEVMO1mSm9I3Ae6ei5Pd0tntOSzhjX0EmOfjLdJuurET" class="img-fluid rounded-start" alt="Fakultas Image">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Nama Fakultas 1</h5>
-                                                            <p class="card-text">Deskripsi singkat tentang fakultas ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang fakultas ini.</p>
+                                <?php
+                                    foreach ($resultf as $rowf) {
+                                        ?>
+                                            <div class="col-md-6">
+                                                <div class="card mb-3">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-4">
+                                                            <img src="../../uploads/<?php echo $rowf['foto_profil']; ?>" class="img-fluid rounded-start" alt="Fakultas Image">
                                                         </div>
-                                                        <div style="position: absolute; bottom: 20px; right: 20px;">
-                                                            <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                            <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card mb-3">
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kNGVJEVMO1mSm9I3Ae6ei5Pd0tntOSzhjX0EmOfjLdJuurET" class="img-fluid rounded-start" alt="Fakultas Image">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Nama Fakultas 2</h5>
-                                                            <p class="card-text">Deskripsi singkat tentang fakultas ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang fakultas ini.</p>
-                                                        </div>
-                                                        <div style="position: absolute; bottom: 20px; right: 20px;">
-                                                            <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                            <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <div class="col-md-8">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title"><?php echo $rowf['nama_fakultas']; ?></h5>
+                                                                <p class="card-text"><?php echo $rowf['deskripsi']; ?></p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 20px; right: 20px;">
+                                                                <a class="btn btn-warning" href="edit.php?id_fakultas=<?php echo $rowf['id_fakultas']; ?>"><i class="fas fa-edit"></i></a>
+                                                                <a class="btn btn-danger" href="hapus.php?id_fakultas=<?php echo $rowf['id_fakultas']; ?>"><i class="fas fa-trash"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php
+                                    }
+                                    ?>
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-primary"> Tambah </a>
+                            <a href="tambah.php" class="btn btn-primary"> Tambah </a>
                         </div>
                     </div>
                 </div>
