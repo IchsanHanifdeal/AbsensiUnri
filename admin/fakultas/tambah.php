@@ -29,13 +29,16 @@ $rowf = mysqli_fetch_assoc($resultf);
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -151,70 +154,37 @@ $rowf = mysqli_fetch_assoc($resultf);
                                     <h3 class="card-title">Tambah Fakultas</h3>
                                 </div>
                                 <div class="card-body">
+                                <form id="editProfileForm" enctype="multipart/form-data" action="" method="POST">
                                     <div class="row">
                                         <div class="col-sm-3 col-6">
-                                            <a data-toggle="modal" data-target="#profilePictureModal">
-                                                <img class="profile-user-img img-fluid" src="../../uploads/error.png" alt="fakultas profile picture" style="width: 100%; height: auto;">
-                                            </a>
-                                            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#changefakultasPictureModal">
-                                                Tambah Gambar Fakultas
-                                            </button>
-                                            <!-- Modal for displaying the larger image -->
-                                            <div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body text-center">
-                                                            <img src="../../uploads/error.png" alt="fakultas profile picture" style="max-width: 100%;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Modal for changing profile picture -->
-                                            <div class="modal fade" id="changeProfilePictureModal" tabindex="-1" role="dialog" aria-labelledby="changeProfilePictureModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="changeProfilePictureModalLabel">Tambah Foto Fakultas</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form id="changeProfilePictureForm" enctype="multipart/form-data" action="" method="POST">
-                                                                <input type="file" name="newProfilePicture" id="newProfilePictureInput" style="display: none;" accept="image/*" onchange="displayNewFileName()">
-                                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('newProfilePictureInput').click()">Pilih Foto Baru</button>
-                                                                <img id="newProfilePicturePreview" class="mt-2" style="max-width: 100%; display: none;">
-                                                                <span id="newProfilePictureFileName" class="mt-2" style="display: none;"></span>
-                                                                <button type="submit" class="btn btn-success">Simpan</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <img id="newProfilePicturePreview" class="mt-2" style="max-width: 100%; display: none;">
+                                            <span id="newProfilePictureFileName" class="mt-2" style="display: none;"></span>
+                                            <label for="newProfilePictureInput" class="btn btn-primary mt-2">
+                                                Pilih Foto Baru
+                                                <input type="file" name="newProfilePicture" id="newProfilePictureInput" style="display: none;" accept="image/*" onchange="displayNewFileName()">
+                                            </label>
                                         </div>
-                                        <!-- /.col -->
                                         <div class="col-sm-8 col-12">
-                                            <form method="POST" action="">
-                                                <div class="row">
-                                                    <div class="col">Nama:</div>
-                                                    <div class="col-sm-10">
-                                                        <input name="nama" type="text" class="form-control" value="">
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col">Nama:</div>
+                                                <div class="col-sm-10">
+                                                    <input name="nama" type="text" class="form-control" value="">
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col mt-2">Deskripsi:</div>
-                                                    <div class="col-sm-10 mt-2">
-                                                        <textarea name="deskripsi" type="text" class="form-control" value=""></textarea>
-                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mt-2">Deskripsi:</div>
+                                                <div class="col-sm-10 mt-2">
+                                                    <textarea name="deskripsi" type="text" class="form-control" value=""></textarea>
                                                 </div>
-                                                <div class="button-container text-right">
-                                                    <button type="submit" class="btn btn-primary mt-3">Simpan</button>
-                                                    <a class="btn btn-secondary mt-3 ml-2" href="profil.php">Batal</a>
-                                                </div>
-                                            </form>
+                                            </div>
+                                            <div class="button-container text-right">
+                                                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                                                <a class="btn btn-secondary mt-3 ml-2" href="fakultas.php">Batal</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -241,11 +211,79 @@ $rowf = mysqli_fetch_assoc($resultf);
     <script src="../../backend/app/dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
-
     <!-- AdminLTE for demo purposes -->
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+    <script>
+        function displayNewFileName() {
+        var input = document.getElementById('newProfilePictureInput');
+        var fileNameContainer = document.getElementById('newProfilePictureFileName');
+        var previewImage = document.getElementById('newProfilePicturePreview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+
+            fileNameContainer.textContent = input.files[0].name;
+            fileNameContainer.style.display = 'block';
+        }
+    }    
+    </script>
+    
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama = $_POST['nama'];
+    $deskripsi = $_POST['deskripsi'];
+    $fotoprofil = $_FILES['newProfilePicture']['name'];
+    $uploadDirectory = '../../uploads/';
+
+    if (!file_exists($uploadDirectory)) {
+        mkdir($uploadDirectory, 0777, true);
+    }
+
+    $targetFilePath = $uploadDirectory . basename($fotoprofil);
+
+    if (move_uploaded_file($_FILES['newProfilePicture']['tmp_name'], $targetFilePath)) {
+        $querys = "INSERT INTO fakultas (nama_fakultas, deskripsi, foto_profil) VALUES ('$nama','$deskripsi','$fotoprofil')";
+
+        if (mysqli_query($conn, $querys)) {
+            echo '<script>
+                    swal.fire({
+                        title: "Sukses",
+                        text: "Data berhasil di input!",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(function() {
+                        window.location.href = "fakultas.php";
+                    });
+                </script>';
+        } else {
+            echo '<script>
+                    swal.fire({
+                        title: "Error",
+                        text: "Error: ' . mysqli_error($conn) . '",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                </script>';
+        }
+    } else {
+        echo '<script>
+                swal.fire({
+                    title: "Error",
+                    text: "Error uploading file.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            </script>';
+    }
+}
+?>
 
 </body>
 

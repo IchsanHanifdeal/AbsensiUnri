@@ -29,13 +29,15 @@ $rowf = mysqli_fetch_assoc($resultf);
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -163,12 +165,12 @@ $rowf = mysqli_fetch_assoc($resultf);
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
-                                                                <h5 class="card-title"><?php echo $rowf['nama_fakultas']; ?></h5>
+                                                                <h2 style="font-size:28px; font-weight:bold; "class="card-title"><?php echo $rowf['nama_fakultas']; ?></h2>
                                                                 <p class="card-text"><?php echo $rowf['deskripsi']; ?></p>
                                                             </div>
                                                             <div style="position: absolute; bottom: 20px; right: 20px;">
                                                                 <a class="btn btn-warning" href="edit.php?id_fakultas=<?php echo $rowf['id_fakultas']; ?>"><i class="fas fa-edit"></i></a>
-                                                                <a class="btn btn-danger" href="hapus.php?id_fakultas=<?php echo $rowf['id_fakultas']; ?>"><i class="fas fa-trash"></i></a>
+                                                                <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $rowf['id_fakultas']; ?>)"><i class="fas fa-trash"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -207,11 +209,31 @@ $rowf = mysqli_fetch_assoc($resultf);
     <script src="../../backend/app/dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+
+<script>
+function confirmDelete(id_fakultas) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this faculty!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "hapus.php?id_fakultas=" + id_fakultas;
+        } else {
+        }
+    });
+}
+</script>
+
 
 </body>
 

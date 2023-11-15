@@ -1,3 +1,15 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username']; 
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+$sqlj = "SELECT * FROM jurusan";
+$resultj = mysqli_query($conn, $sqlj);
+$rowj = mysqli_fetch_assoc($resultj);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +28,8 @@
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+
 
 </head>
 
@@ -23,7 +37,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -41,8 +55,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -69,39 +83,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="../fakultas/fakultas.php" class="nav-link">
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link active">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item menu-open">
                                 <a href="jurusan.php" class="nav-link active">
@@ -128,7 +115,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -167,48 +154,33 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
+                                    <?php
+                                    foreach ($resultj as $rowj) {
+                                        ?>
                                         <div class="col-md-6">
                                             <div class="card mb-3">
                                                 <div class="row g-0">
                                                     <div class="col-md-4">
-                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kNGVJEVMO1mSm9I3Ae6ei5Pd0tntOSzhjX0EmOfjLdJuurET" class="img-fluid rounded-start" alt="Fakultas Image">
+                                                        <img src="../../uploads/<?php echo $rowj['foto_profil']; ?>" class="img-fluid rounded-start" alt="Fakultas Image">
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
-                                                            <h5 class="card-title">Nama Jurusan 1</h5>
-                                                            <p class="card-text">Deskripsi singkat tentang jurusan ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang jurusan ini.</p>
+                                                            <h1 style="font-size:25px; font-weight:bold;" class="card-title"><?php echo $rowj['nama_jurusan'] ?></h1>
+                                                            <p class="card-text"><?php echo $rowj['deskripsi'] ?></p>
                                                             <div style="position: absolute; bottom: 20px; right: 20px;">
-                                                                <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                                <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                                <a class="btn btn-warning" href="edit.php?id_jurusan=<?php echo $rowj['id_jurusan']; ?>"><i class="fas fa-edit"></i></a>
+                                                                <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $rowj['id_jurusan']; ?>)"><i class="fas fa-trash"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="card mb-3">
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kNGVJEVMO1mSm9I3Ae6ei5Pd0tntOSzhjX0EmOfjLdJuurET" class="img-fluid rounded-start" alt="Fakultas Image">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Nama Jurusan 2</h5>
-                                                            <p class="card-text">Deskripsi singkat tentang jurusan ini. Ini adalah konten lebih lanjut yang bisa menjelaskan tentang jurusan ini.</p>
-                                                            <div style="position: absolute; bottom: 20px; right: 20px;">
-                                                                <a class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                                <a class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <?php } ?>
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-primary"> Tambah </a>
+                            <a class="btn btn-primary" href="tambah.php"> Tambah </a>
                         </div>
                     </div>
                 </div>
@@ -235,12 +207,30 @@
     <script src="../../backend/app/dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
 
     <!-- AdminLTE for demo purposes -->
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
 
+<script>
+    function confirmDelete(id_jurusan) {
+        Swal.fire({
+            title: 'Apa anda Yakin?',
+            text: 'Setelah dihapus, Anda tidak akan dapat memulihkan jurusan ini!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'hapus.php?id_jurusan=' + id_jurusan;
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

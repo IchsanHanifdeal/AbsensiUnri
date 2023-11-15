@@ -1,3 +1,28 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+$sqld = "SELECT * FROM dosen";
+$resultd = mysqli_query($conn, $sqld);
+$rowd = mysqli_fetch_assoc($resultd);
+$idDosen = $rowd['id_dosen'];
+$no = 1;
+$nip = $rowd['nip'];
+$fotoprofil = $rowd['foto_profil'];
+$username = $rowd['username'];
+$nama = $rowd['nama'];
+$alamat = $rowd['alamat'];
+$kodepos = $rowd['kodepos'];
+$gelardepan = $rowd['gelardepan'];
+$gelarbelakang = $rowd['gelarbelakang'];
+$tempat = $rowd['tempat'];
+$tanggallahir = $rowd['tanggal_lahir'];
+$jenisKelamin = $rowd['jenis_kelamin'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +48,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -40,9 +65,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="../dashboard.php" class="brand-link">
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -73,35 +98,8 @@
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link active">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="../jurusan/jurusan.php" class="nav-link">
@@ -175,50 +173,28 @@
                                                 <th>Gelar Belakang</th>
                                                 <th>Tempat/Tanggal Lahir</th>
                                                 <th>Jenis Kelamin</th>
-                                                <th>Aksi</th>
+                                                <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>123456789</td>
-                                                <td>John Doe</td>
-                                                <td>Jl. Example 123</td>
-                                                <td>12345</td>
-                                                <td>Dr.</td>
-                                                <td></td>
-                                                <td>Jakarta, 01 Januari 1980</td>
-                                                <td>Laki-laki</td>
-                                                <td>
-                                                    <a href="detail.php" class="btn btn-success">
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $nip ?></td>
+                                                <td><?php echo $nama ?></td>
+                                                <td><?php echo $alamat ?></td>
+                                                <td><?php echo $kodepos ?></td>
+                                                <td><?php echo $gelardepan ?></td>
+                                                <td><?php echo $gelarbelakang ?></td>
+                                                <td><?php echo $tempat . "/" . $tanggallahir ?></td>
+                                                <td><?php echo $jenisKelamin ?></td>
+                                                <td class="text-center">
+                                                    <a href="detail.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-success">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-info">
+                                                    <a href="edit.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-info">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>987654321</td>
-                                                <td>Jane Smith</td>
-                                                <td>Jl. Sample 456</td>
-                                                <td>54321</td>
-                                                <td>Prof.</td>
-                                                <td></td>
-                                                <td>Bandung, 15 Februari 1990</td>
-                                                <td>Perempuan</td>
-                                                <td>
-                                                    <a href="#" class="btn btn-success">
-                                                        <i class="fas fa-info-circle"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-info">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger">
+                                                    <a href="hapus.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-danger">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </td>
@@ -226,6 +202,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="text-right">
+                            <div class="btn btn-primary"> Tambah </div>
                             </div>
                         </div>
                     </div>

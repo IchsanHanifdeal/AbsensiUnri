@@ -1,3 +1,30 @@
+<?php 
+session_start();
+include '../../backend/koneksi.php';
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM admin WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+$sqld = "SELECT * FROM dosen";
+$resultd = mysqli_query($conn, $sqld);
+$rowd = mysqli_fetch_assoc($resultd);
+$idDosen = $rowd['id_dosen'];
+$no = 1;
+$nip = $rowd['nip'];
+$fotoprofil = $rowd['foto_profil'];
+$username = $rowd['username'];
+$nama = $rowd['nama'];
+$alamat = $rowd['alamat'];
+$kodepos = $rowd['kodepos'];
+$gelardepan = $rowd['gelardepan'];
+$gelarbelakang = $rowd['gelarbelakang'];
+$tempat = $rowd['tempat'];
+$tanggallahir = $rowd['tanggal_lahir'];
+$jenisKelamin = $rowd['jenis_kelamin'];
+$email = $rowd['email'];
+$jabatan = $rowd['jabatan'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +50,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -40,9 +67,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../backend/app/index3.html" class="brand-link">
-                <img src="../../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="../dashboard.php" class="brand-link">
+                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -69,39 +96,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="../fakultas/fakultas.php" class="nav-link">
                                     <i class="nav-icon fas fa-university"></i>
                                     <p>
                                         Fakultas
-                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Ekonomi dan Bisnis</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Sosial dan Ilmu Pemerintahan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-graduation-cap"></i>
-                                            <p>Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../fakultas/fakultas.php" class="nav-link active">
-                                            <i class="nav-icon fas fa-search"></i>
-                                            <p>Show All</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="../jurusan/jurusan.php" class="nav-link">
@@ -128,7 +128,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -165,6 +165,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="container">
+                                        <form id="editProfileForm" enctype="multipart/form-data" action="" method="POST">
                                         <div class="row gutters">
                                             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                                                 <div class="card h-100">
@@ -172,25 +173,24 @@
                                                         <div class="account-settings">
                                                             <div class="user-profile">
                                                                 <a data-toggle="modal" data-target="#userAvatarModal">
-                                                                    <img class="profile-user-img img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%; height: auto;">
+                                                                    <img class="profile-user-img img-fluid" src="../../uploads/<?php echo $fotoprofil; ?>" alt="User profile picture" style="width: 100%; height: auto;">
                                                                 </a>
-                                                                <!-- Modal for displaying the larger image -->
                                                                 <div class="modal fade" id="userAvatarModal" tabindex="-1" role="dialog" aria-labelledby="userAvatarModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-body">
-                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User profile picture" style="width: 100%;">
+                                                                                <img src="../../uploads/<?php echo $fotoprofil; ?>" alt="User profile picture" style="width: 100%;">
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#changePictureModal">Change Picture</button>
+                                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Change</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <br><br>
-                                                                <h5 class="user-name text-center">Yuki Hayashi</h5>
-                                                                <h6 class="user-email text-center">yuki@Maxwell.com</h6>
+                                                                <h5 class="user-name text-center"><?php echo $nama; ?></h5>
+                                                                <h6 class="user-email text-center"><?php echo $email; ?></h6>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -206,57 +206,45 @@
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="namalengkap">Nama Lengkap</label>
-                                                                    <input type="text" class="form-control" id="namalengkap" placeholder="Nama Lengkap">
+                                                                    <input type="text" class="form-control" name="namalengkap" id="namalengkap" placeholder="Nama Lengkap" value="<?php echo $nama ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="jeniskelamin">Jenis Kelamin</label>
-                                                                    <input type="text" class="form-control" id="jeniskelamin" placeholder="Jenis Kelamin">
+                                                                    <input type="text" class="form-control" name="jeniskelamin" id="jeniskelamin" placeholder="Jenis Kelamin" value="<?php echo $jenisKelamin ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="JabatanFungsional">Jabatan Fungsional</label>
-                                                                    <input type="text" class="form-control" id="JabatanFungsional" placeholder="Jabatan Fungsional">
+                                                                    <input type="text" class="form-control" name="JabatanFungsional" id="JabatanFungsional" placeholder="Jabatan Fungsional" value="<?php echo $jabatan ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="nip">NIP</label>
-                                                                    <input type="text" class="form-control" id="nip" placeholder="NIP">
+                                                                    <input type="text" class="form-control" name="nip" id="nip" placeholder="NIP" value="<?php echo $nip ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="tempat">Tempat Lahir</label>
-                                                                    <input type="text" class="form-control" id="tempat" placeholder="Tempat Lahir">
+                                                                    <input type="text" class="form-control" name="tempat" id="tempat" placeholder="Tempat Lahir" value="<?php echo $tempat ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="tanggallahir">Tanggal Lahir</label>
-                                                                    <input type="date" class="form-control" id="tanggallahir" placeholder="Tanggal Lahir">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                                <div class="form-group">
-                                                                    <label for="nohp">No Telp</label>
-                                                                    <input type="text" class="form-control" id="nohp" placeholder="No Telp">
-                                                                </div>
-                                                            </div>
-                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                                <div class="form-group">
-                                                                    <label for="bidKeahlian">Bidang Keahlian</label>
-                                                                    <input type="text" class="form-control" id="bidKeahlian" placeholder="Bidang Keahlian">
+                                                                    <input type="date" class="form-control" name="tanggallahir" id="tanggallahir" placeholder="Tanggal Lahir" value="<?php echo $tanggallahir ?>">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row gutters">
                                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                                <div class="text-right">
+                                                               <div class="text-right">
                                                                     <a type="button" id="submit" name="submit" class="btn btn-secondary" href="dosen.php">Cancel</a>
-                                                                    <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                                                    <button type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -264,6 +252,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -297,7 +286,11 @@
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
-
+    <?php 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+    }
+    ?>
 </body>
 
 </html>
