@@ -43,6 +43,8 @@ $jabatan = $rowd['jabatan'];
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
 
 </head>
 
@@ -183,7 +185,7 @@ $jabatan = $rowd['jabatan'];
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Change</button>
+                                                                                <a type="file" class="btn btn-primary" data-dismiss="modal">Change</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -217,6 +219,30 @@ $jabatan = $rowd['jabatan'];
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
+                                                                    <label for="alamat">Alamat</label>
+                                                                    <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat" value="<?php echo $alamat ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="Kode Pos">Kode Pos</label>
+                                                                    <input type="number" class="form-control" name="kodepos" id="kodepos" placeholder="Kode Pos" value="<?php echo $kodepos ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="gelardepan">Gelar depan</label>
+                                                                    <input type="text" class="form-control" name="gelardepan" id="gelardepan" placeholder="Jabatan Fungsional" value="<?php echo $gelardepan ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="gelarbelakang">Gelar belakang</label>
+                                                                    <input type="text" class="form-control" name="gelarbelakang" id="gelarbelakang" placeholder="NIP" value="<?php echo $gelarbelakang ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
                                                                     <label for="JabatanFungsional">Jabatan Fungsional</label>
                                                                     <input type="text" class="form-control" name="JabatanFungsional" id="JabatanFungsional" placeholder="Jabatan Fungsional" value="<?php echo $jabatan ?>">
                                                                 </div>
@@ -224,7 +250,7 @@ $jabatan = $rowd['jabatan'];
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                                 <div class="form-group">
                                                                     <label for="nip">NIP</label>
-                                                                    <input type="text" class="form-control" name="nip" id="nip" placeholder="NIP" value="<?php echo $nip ?>">
+                                                                    <input type="number" class="form-control" name="nip" id="nip" placeholder="NIP" value="<?php echo $nip ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -237,6 +263,12 @@ $jabatan = $rowd['jabatan'];
                                                                 <div class="form-group">
                                                                     <label for="tanggallahir">Tanggal Lahir</label>
                                                                     <input type="date" class="form-control" name="tanggallahir" id="tanggallahir" placeholder="Tanggal Lahir" value="<?php echo $tanggallahir ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="tanggallahir">Email</label>
+                                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email ?>">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -286,9 +318,93 @@ $jabatan = $rowd['jabatan'];
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+
     <?php 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
+        $nama = $_POST['namalengkap'];
+        $jenisKelamin = $_POST['jeniskelamin'];
+        $jabatan = $_POST['JabatanFungsional'];
+        $nip = $_POST['nip'];
+        $tempat = $_POST['tempat'];
+        $tanggallahir = $_POST['tanggallahir'];
+        $alamat = $_POST['alamat'];
+        $kodepos = $_POST['kodepos'];
+        $gelardepan = $_POST['gelardepan'];
+        $gelarbelakang = $_POST['gelarbelakang'];
+        $email = $_POST['email'];
+        $fotoprofil = $_FILES['newProfilePicture']['name'];        
+        $uploadDirectory = '../../uploads/';
+
+        if (!empty($fotoprofil)) {
+        if (!file_exists($uploadDirectory)) {
+            mkdir($uploadDirectory, 0777, true);
+        }
+        $targetFilePath = $uploadDirectory . basename($fotoprofil);
+        if (move_uploaded_file($_FILES['newProfilePicture']['tmp_name'], $targetFilePath)) {
+            $querys = "UPDATE dosen SET 
+            foto_profil ='$fotoprofil', 
+            nip = '$nip',
+            nama = '$nama',
+            alamat = '$alamat', 
+            kodepos = '$kodepos',
+            gelardepan = '$gelardepan',
+            gelarbelakang = '$gelarbelakang',
+            tempat = '$tempat',
+            tanggal_lahir = '$tanggallahir',
+            jenis_kelamin = '$jenisKelamin',
+            jabatan = '$jabatan',
+            email = '$email'
+            WHERE 
+            id_dosen='$idDosen'";
+        } else {
+            echo '<script>
+                swal.fire({
+                    title: "Error",
+                    text: "Error uploading file.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            </script>';
+            exit; 
+        }
+    } else {
+        $querys = "UPDATE dosen SET 
+        nip = '$nip',
+            nama = '$nama',
+            alamat = '$alamat', 
+            kodepos = '$kodepos',
+            gelardepan = '$gelardepan',
+            gelarbelakang = '$gelarbelakang',
+            tempat = '$tempat',
+            tanggal_lahir = '$tanggallahir',
+            jenis_kelamin = '$jenisKelamin',
+            jabatan = '$jabatan',
+            email = '$email'
+            WHERE 
+            id_dosen='$idDosen'";
+    }
+
+    if (mysqli_query($conn, $querys)) {
+        echo '<script>
+                swal.fire({
+                    title: "Sukses",
+                    text: "Data Berhasil di Update!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                }).then(function() {
+                    window.location.href = "dosen.php";
+                });
+            </script>';
+    } else {
+        echo '<script>
+                swal.fire({
+                    title: "Error",
+                    text: "Error: ' . mysqli_error($conn) . '",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            </script>';
+    }
     }
     ?>
 </body>

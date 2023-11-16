@@ -42,6 +42,8 @@ $jenisKelamin = $rowd['jenis_kelamin'];
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -161,7 +163,7 @@ $jenisKelamin = $rowd['jenis_kelamin'];
                                     <h3 class="card-title">Dosen</h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -191,12 +193,10 @@ $jenisKelamin = $rowd['jenis_kelamin'];
                                                     <a href="detail.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-success">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
-                                                    <a href="edit.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-info">
+                                                    <a href="edit.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-warning">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="hapus.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
+                                                    <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $idDosen; ?>)"><i class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -243,6 +243,8 @@ $jenisKelamin = $rowd['jenis_kelamin'];
     <script src="../../backend/app/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../backend/app/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../backend/app/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+
 
     <!-- AdminLTE for demo purposes -->
     <script src="../../backend/app/dist/js/demo.js"></script>
@@ -267,6 +269,25 @@ $jenisKelamin = $rowd['jenis_kelamin'];
             });
         });
     </script>
+
+    <script>
+function confirmDelete(id_dosen) {
+    Swal.fire({
+        title: "Apa kamu yakin?",
+        text: "Ketika dihapus, Anda tidak dapat mengembalikan data ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "hapus.php?id_dosen=" + id_dosen;
+        } else {
+        }
+    });
+}
+</script>
 
 </body>
 
