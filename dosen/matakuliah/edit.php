@@ -3,6 +3,12 @@ session_start();
 include '../../backend/koneksi.php';
 $username = $_SESSION['username'];
 $status = $_SESSION['role'];
+$id_matkul = $_GET['id_matkul'];
+$sqlf = "SELECT * FROM matakuliah WHERE id_matkul = '$id_matkul'";
+$resultf = mysqli_query($conn, $sqlf);
+$rowf = mysqli_fetch_assoc($resultf);
+$nama = $rowf['nama'];
+$jumlah = $rowf['jumlah_mahasiswa'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +28,10 @@ $status = $_SESSION['role'];
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+
 
 </head>
 
@@ -104,6 +114,56 @@ $status = $_SESSION['role'];
             <!-- /.sidebar -->
         </aside>
 
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">MAHASISWA | ABSENSI UNRI</h1>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Mata Kuliah</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <form id="editProfileForm" enctype="multipart/form-data" action="" method="POST">
+                                            <div class="row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="namaMatkul">Nama Mata Kuliah:</label>
+                                                        <input name="nama" type="text" class="form-control" id="namaMatkul" value="<?php echo $nama; ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="jumlahMahasiswa">Jumlah Mahasiswa:</label>
+                                                        <input name="jumlah" type="number" class="form-control" id="jumlahMahasiswa" value="<?php echo $jumlah; ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     <footer class="main-footer">
         <strong>Copyright &copy; 2023<a href="instagram.com"> Ichsan Hanifdeal</a>.</strong>
     </footer>
@@ -127,5 +187,36 @@ $status = $_SESSION['role'];
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_matkul = $_POST['id_matkul'];
+        $nama = $_POST['nama'];
+        $jumlah = $_POST['jumlah'];
+        $querys = "UPDATE matakuliah SET
+        nama = '$nama', 
+        jumlah_mahasiswa = '$jumlah' WHERE id_matkul = '$id_matkul'";
+        if (mysqli_query($conn, $querys)) {
+            echo '<script>
+                    swal.fire({
+                        title: "Sukses",
+                        text: "Data berhasil di edit!",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(function() {
+                        window.location.href = "matakuliah.php";
+                    });
+                </script>';
+        } else {
+            echo '<script>
+                    swal.fire({
+                        title: "Error",
+                        text: "Error: ' . mysqli_error($conn) . '",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                </script>';
+        }
+    }
+    ?>
 </body>
 </html>

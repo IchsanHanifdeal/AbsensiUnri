@@ -20,10 +20,8 @@ $status = $_SESSION['role'];
     <link rel="stylesheet" href="../../backend/app/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
     <!-- Theme style -->
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
-   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
-
+    <!-- Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
 </head>
 
@@ -106,84 +104,6 @@ $status = $_SESSION['role'];
             <!-- /.sidebar -->
         </aside>
 
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">MATA KULIAH | ABSENSI UNRI</h1>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Mata Kuliah</h3>
-                                </div>
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Mata Kuliah</th>
-                                                <th class="text-center">Jumlah Mahasiswa</th>
-                                                <th class="text-center">Opsi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $no = 1;
-                                            $sqld = "SELECT * FROM matakuliah";
-                                            $resultd = mysqli_query($conn, $sqld);
-
-                                            if ($resultd && mysqli_num_rows($resultd) > 0) {
-                                                while ($rowd = mysqli_fetch_assoc($resultd)) {
-                                                    $idMatakuliah = $rowd['id_matkul'];
-                                                    $matakuliah = $rowd['nama'];
-                                                    $jumlah = $rowd['jumlah_mahasiswa'];
-                                            ?>
-                                                    <tr>
-                                                        <td><?php echo $no++ ?></td>
-                                                        <td><?php echo $matakuliah ?></td>
-                                                        <td class="text-center"><?php echo $jumlah ?></td>
-                                                        <td class="text-center">
-                                                            <a href="laporan.php?id_matkul=<?php echo $idMatakuliah; ?>" class="btn btn-success">
-                                                                <i class="fas fa-file"></i>
-                                                            </a>
-                                                            <a href="edit.php?id_matkul=<?php echo $idMatakuliah; ?>" class="btn btn-warning">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                            <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $idMatakuliah; ?>)">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                            <?php
-                                                }
-                                            } else {
-                                                echo "<tr><td colspan='3'>Tidak ada data.</td></tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                            <a href="tambah.php" class="btn btn-primary">Tambah</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
     <footer class="main-footer">
         <strong>Copyright &copy; 2023<a href="instagram.com"> Ichsan Hanifdeal</a>.</strong>
     </footer>
@@ -207,23 +127,5 @@ $status = $_SESSION['role'];
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
-    <script>
-    function confirmDelete(id_matkul) {
-    Swal.fire({
-        title: "Apa kamu yakin?",
-        text: "Ketika dihapus, Anda tidak dapat mengembalikan data ini!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "hapus.php?id_matkul=" + id_matkul;
-        } else {
-        }
-    });
-    }
-    </script>
 </body>
 </html>
