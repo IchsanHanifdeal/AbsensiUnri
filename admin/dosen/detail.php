@@ -2,11 +2,14 @@
 session_start();
 include '../../backend/koneksi.php';
 $username = $_SESSION['username'];
+$id_dosen = $_GET['id_dosen'];
+
 $sql = "SELECT * FROM admin WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $foto_profil = $row['foto_profil'];
-$sqld = "SELECT * FROM dosen";
+
+$sqld = "SELECT * FROM dosen WHERE id_dosen = '$id_dosen'";
 $resultd = mysqli_query($conn, $sqld);
 $rowd = mysqli_fetch_assoc($resultd);
 $idDosen = $rowd['id_dosen'];

@@ -6,22 +6,6 @@ $sql = "SELECT * FROM admin WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $foto_profil = $row['foto_profil'];
-$sqld = "SELECT * FROM dosen";
-$resultd = mysqli_query($conn, $sqld);
-$rowd = mysqli_fetch_assoc($resultd);
-$idDosen = $rowd['id_dosen'];
-$no = 1;
-$nip = $rowd['nip'];
-$fotoprofil = $rowd['foto_profil'];
-$username = $rowd['username'];
-$nama = $rowd['nama'];
-$alamat = $rowd['alamat'];
-$kodepos = $rowd['kodepos'];
-$gelardepan = $rowd['gelardepan'];
-$gelarbelakang = $rowd['gelarbelakang'];
-$tempat = $rowd['tempat'];
-$tanggallahir = $rowd['tanggal_lahir'];
-$jenisKelamin = $rowd['jenis_kelamin'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +112,7 @@ $jenisKelamin = $rowd['jenis_kelamin'];
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../Logout.php" class="nav-link">
+                                <a href="../../backend/Logout.php" class="nav-link">
                                     <i class="nav-icon fas fa-power-off"></i>
                                     <p>
                                         Log Out
@@ -179,32 +163,58 @@ $jenisKelamin = $rowd['jenis_kelamin'];
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><?php echo $no++; ?></td>
-                                                <td><?php echo $nip ?></td>
-                                                <td><?php echo $nama ?></td>
-                                                <td><?php echo $alamat ?></td>
-                                                <td><?php echo $kodepos ?></td>
-                                                <td><?php echo $gelardepan ?></td>
-                                                <td><?php echo $gelarbelakang ?></td>
-                                                <td><?php echo $tempat . "/" . $tanggallahir ?></td>
-                                                <td><?php echo $jenisKelamin ?></td>
-                                                <td class="text-center">
-                                                    <a href="detail.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-success">
-                                                        <i class="fas fa-info-circle"></i>
-                                                    </a>
-                                                    <a href="edit.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-warning">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $idDosen; ?>)"><i class="fas fa-trash"></i></a>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                            $no = 1;
+                                            $sqld = "SELECT * FROM dosen";
+                                            $resultd = mysqli_query($conn, $sqld);
+
+                                            if ($resultd) {
+                                                while ($rowd = mysqli_fetch_assoc($resultd)) {
+                                                    $idDosen = $rowd['id_dosen'];
+                                                    $nip = $rowd['nip'];
+                                                    $fotoprofil = $rowd['foto_profil'];
+                                                    $username = $rowd['username'];
+                                                    $nama = $rowd['nama'];
+                                                    $alamat = $rowd['alamat'];
+                                                    $kodepos = $rowd['kodepos'];
+                                                    $gelardepan = $rowd['gelardepan'];
+                                                    $gelarbelakang = $rowd['gelarbelakang'];
+                                                    $tempat = $rowd['tempat'];
+                                                    $tanggallahir = $rowd['tanggal_lahir'];
+                                                    $jenisKelamin = $rowd['jenis_kelamin'];
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo $no++; ?></td>
+                                                        <td><?php echo $nip ?></td>
+                                                        <td><?php echo $nama ?></td>
+                                                        <td><?php echo $alamat ?></td>
+                                                        <td><?php echo $kodepos ?></td>
+                                                        <td><?php echo $gelardepan ?></td>
+                                                        <td><?php echo $gelarbelakang ?></td>
+                                                        <td><?php echo $tempat . "/" . $tanggallahir ?></td>
+                                                        <td><?php echo $jenisKelamin ?></td>
+                                                        <td class="text-center">
+                                                            <a href="detail.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-success">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+                                                            <a href="edit.php?id_dosen=<?php echo $idDosen; ?>" class="btn btn-warning">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $idDosen; ?>)"><i class="fas fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='10'>Tidak ada data.</td></tr>";
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="text-right">
-                            <div class="btn btn-primary"> Tambah </div>
+                            <a class="btn btn-primary" href="tambah.php"> Tambah </a>
                             </div>
                         </div>
                     </div>
@@ -271,7 +281,7 @@ $jenisKelamin = $rowd['jenis_kelamin'];
     </script>
 
     <script>
-function confirmDelete(id_dosen) {
+    function confirmDelete(id_dosen) {
     Swal.fire({
         title: "Apa kamu yakin?",
         text: "Ketika dihapus, Anda tidak dapat mengembalikan data ini!",

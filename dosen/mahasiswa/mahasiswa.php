@@ -2,10 +2,7 @@
 session_start();
 include '../../backend/koneksi.php';
 $username = $_SESSION['username'];
-$sql = "SELECT * FROM admin WHERE username = '$username'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-$foto_profil = $row['foto_profil'];
+$status = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +10,7 @@ $foto_profil = $row['foto_profil'];
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin | Profil</title>
+    <title>Admin | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
@@ -25,7 +22,6 @@ $foto_profil = $row['foto_profil'];
     <link rel="stylesheet" href="../../backend/app/dist/css/adminlte.min.css" />
     <!-- Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
 
 </head>
 
@@ -33,7 +29,7 @@ $foto_profil = $row['foto_profil'];
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="rounded-circle animation__wobble" src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../uploads/<?php echo $foto_profil; ?>" alt="logo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -41,7 +37,7 @@ $foto_profil = $row['foto_profil'];
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="../../backend/app/#" role="button"><i class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="../backend/app/#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
         </nav>
@@ -51,14 +47,12 @@ $foto_profil = $row['foto_profil'];
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="../dashboard.php" class="brand-link">
-                <img src="../../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light"><?php echo $username ?></span>
+                <img src="../../uploads/<?php echo $foto_profil ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
-            <!-- Sidebar -->
             <div class="sidebar">
 
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <nav class="mt-2">
@@ -79,26 +73,10 @@ $foto_profil = $row['foto_profil'];
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../fakultas/fakultas.php" class="nav-link">
-                                    <i class="nav-icon fas fa-university"></i>
-                                    <p>
-                                        Fakultas
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../jurusan/jurusan.php" class="nav-link">
+                                <a href="../matakuliah/matakuliah.php" class="nav-link">
                                     <i class="nav-icon fas fa-graduation-cap"></i>
                                     <p>
-                                        Jurusan
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../dosen/dosen.php" class="nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Dosen
+                                        Mata Kuliah
                                     </p>
                                 </a>
                             </li>
@@ -118,6 +96,7 @@ $foto_profil = $row['foto_profil'];
                                     </p>
                                 </a>
                             </li>
+                        </nav>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -125,7 +104,7 @@ $foto_profil = $row['foto_profil'];
             <!-- /.sidebar -->
         </aside>
 
-        <div class="content-wrapper">
+                <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -159,7 +138,6 @@ $foto_profil = $row['foto_profil'];
                                                 <th>No Hp</th>
                                                 <th>Fakultas</th>
                                                 <th>Jurusan</th>
-                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -199,15 +177,6 @@ $foto_profil = $row['foto_profil'];
                                                         <td><?php echo $nohp; ?></td>
                                                         <td><?php echo $fakultas ?></td>
                                                         <td><?php echo $jurusan ?></td>
-                                                        <td class="text-center">
-                                                            <a href="detail.php?id_mahasiswa=<?php echo $idMahasiswa; ?>" class="btn btn-success">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </a>
-                                                            <a href="edit.php?id_mahasiswa=<?php echo $idMahasiswa; ?>" class="btn btn-warning">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                            <a class="btn btn-danger" href="#" onclick="confirmDelete(<?php echo $idMahasiswa; ?>)"><i class="fas fa-trash"></i></a>
-                                                        </td>
                                                     </tr>
                                             <?php
                                                 }
@@ -219,9 +188,6 @@ $foto_profil = $row['foto_profil'];
                                     </table>
                                 </div>
                             </div>
-                            <div class="text-right">
-                            <a class="btn btn-primary" href="tambah.php"> Tambah </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -230,10 +196,7 @@ $foto_profil = $row['foto_profil'];
     </div>
     <footer class="main-footer">
         <strong>Copyright &copy; 2023<a href="instagram.com"> Ichsan Hanifdeal</a>.</strong>
-        </div>
     </footer>
-    </div>
-    <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -249,57 +212,10 @@ $foto_profil = $row['foto_profil'];
     <script src="../../backend/app/dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
-    <script src="../../backend/app/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="../../backend/app/plugins/jszip/jszip.min.js"></script>
-    <script src="../../backend/app/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="../../backend/app/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="../../backend/app/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="../../backend/app/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <!-- AdminLTE for demo purposes -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
-    <script>
-        $(function() {
-            $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-    </script>
-
-    <script>
-    function confirmDelete(id_mahasiswa) {
-    Swal.fire({
-        title: "Apa kamu yakin?",
-        text: "Ketika dihapus, Anda tidak dapat mengembalikan data ini!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "hapus.php?id_mahasiswa=" + id_mahasiswa;
-        } else {
-        }
-    });
-    }
-    </script>
-
 </body>
-
 </html>

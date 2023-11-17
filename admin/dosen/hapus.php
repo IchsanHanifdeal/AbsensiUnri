@@ -8,13 +8,18 @@ if ($conn->connect_error) {
 if (isset($_GET['id_dosen']) && is_numeric($_GET['id_dosen'])) {
     $id_dosen = $_GET['id_dosen'];
 
-    $sql = "DELETE FROM dosen WHERE id_dosen = $id_dosen";
+    $conn->query("SET foreign_key_checks = 0");
+    $sql_users = "DELETE FROM users WHERE id_dosen = $id_dosen";
 
-    if ($conn->query($sql) === TRUE) {
+    $sql_dosen = "DELETE FROM dosen WHERE id_dosen = $id_dosen";
+
+    if ($conn->query($sql_users) === TRUE && $conn->query($sql_dosen) === TRUE) {
+        $conn->query("SET foreign_key_checks = 1");
+
         header("Location: dosen.php");
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql_dosen . "<br>" . $conn->error;
     }
 } else {
     echo "Invalid dosen ID.";

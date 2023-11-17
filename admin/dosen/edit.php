@@ -3,10 +3,11 @@ session_start();
 include '../../backend/koneksi.php';
 $username = $_SESSION['username'];
 $sql = "SELECT * FROM admin WHERE username = '$username'";
+$id_dosen = $_GET['id_dosen'];
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $foto_profil = $row['foto_profil'];
-$sqld = "SELECT * FROM dosen";
+$sqld = "SELECT * FROM dosen WHERE id_dosen = '$id_dosen'";
 $resultd = mysqli_query($conn, $sqld);
 $rowd = mysqli_fetch_assoc($resultd);
 $idDosen = $rowd['id_dosen'];
@@ -163,7 +164,7 @@ $jabatan = $rowd['jabatan'];
                         <div class="col-md-10">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Detail Dosen</h3>
+                                    <h3 class="card-title">Edit Data Dosen</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="container">
@@ -174,23 +175,47 @@ $jabatan = $rowd['jabatan'];
                                                     <div class="card-body">
                                                         <div class="account-settings">
                                                             <div class="user-profile">
-                                                                <a data-toggle="modal" data-target="#userAvatarModal">
+                                                                <a data-toggle="modal" data-target="#profilePictureModal">
                                                                     <img class="profile-user-img img-fluid" src="../../uploads/<?php echo $fotoprofil; ?>" alt="User profile picture" style="width: 100%; height: auto;">
                                                                 </a>
-                                                                <div class="modal fade" id="userAvatarModal" tabindex="-1" role="dialog" aria-labelledby="userAvatarModalLabel" aria-hidden="true">
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#changeProfilePictureModal">
+                                                                        Ganti Foto
+                                                                    </button>
+                                                                </div>
+                                                                <!-- Modal for displaying the larger image -->
+                                                                <div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                                         <div class="modal-content">
-                                                                            <div class="modal-body">
-                                                                                <img src="../../uploads/<?php echo $fotoprofil; ?>" alt="User profile picture" style="width: 100%;">
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <a type="file" class="btn btn-primary" data-dismiss="modal">Change</a>
+                                                                            <div class="modal-body text-center">
+                                                                                <img src="../../uploads/<?php echo $fotoprofil; ?>" alt="User profile picture" style="max-width: 100%;">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <br><br>
+                                                                <!-- Modal for changing profile picture -->
+                                                                <div class="modal fade" id="changeProfilePictureModal" tabindex="-1" role="dialog" aria-labelledby="changeProfilePictureModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="changeProfilePictureModalLabel">Ganti Foto</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <form id="changeProfilePictureForm" enctype="multipart/form-data" action="" method="POST">
+                                                                                    <input type="file" name="newProfilePicture" id="newProfilePictureInput" style="display: none;" accept="image/*" onchange="displayNewFileName()">
+                                                                                    <button type="button" class="btn btn-primary" onclick="document.getElementById('newProfilePictureInput').click()">Pilih Foto Baru</button>
+                                                                                    <img id="newProfilePicturePreview" class="mt-2" style="max-width: 100%; display: none;">
+                                                                                    <span id="newProfilePictureFileName" class="mt-2" style="display: none;"></span>
+                                                                                    <button type="submit" class="btn btn-success">Simpan</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
                                                                 <h5 class="user-name text-center"><?php echo $nama; ?></h5>
                                                                 <h6 class="user-email text-center"><?php echo $email; ?></h6>
                                                             </div>
@@ -318,6 +343,26 @@ $jabatan = $rowd['jabatan'];
     <script src="../../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../backend/app/dist/js/pages/dashboard2.js"></script>
+
+        <script>
+    function displayNewFileName() {
+        var input = document.getElementById('newProfilePictureInput');
+        var fileNameContainer = document.getElementById('newProfilePictureFileName');
+        var previewImage = document.getElementById('newProfilePicturePreview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+
+            fileNameContainer.textContent = input.files[0].name;
+            fileNameContainer.style.display = 'block';
+        }
+    }    
+    </script>
 
     <?php 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

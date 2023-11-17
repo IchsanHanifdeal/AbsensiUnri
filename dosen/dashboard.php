@@ -1,3 +1,28 @@
+<?php 
+session_start();
+include '../backend/koneksi.php'; 
+$username = $_SESSION['username'];
+
+$sql = "SELECT * FROM dosen WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$foto_profil = $row['foto_profil'];
+
+$sqlMatakuliah = "SELECT COUNT(*) as total_matakuliah FROM matakuliah";
+$resultMatakuliah = mysqli_query($conn, $sqlMatakuliah);
+$rowMatakuliah = mysqli_fetch_assoc($resultMatakuliah);
+$jumlahMatakuliah = $rowMatakuliah['total_matakuliah'];
+
+$sqlMahasiswa = "SELECT COUNT(*) as total_mahasiswa FROM mahasiswa";
+$resultMahasiswa = mysqli_query($conn, $sqlMahasiswa);
+$rowMahasiswa = mysqli_fetch_assoc($resultMahasiswa);
+$jumlahMahasiswa = $rowMahasiswa['total_mahasiswa'];
+
+$sqlLaporan = "SELECT COUNT(*) as total_laporan FROM rekap_absensi";
+$resultLaporan = mysqli_query($conn, $sqlLaporan);
+$rowLaporan = mysqli_fetch_assoc($resultLaporan);
+$jumlahLaporan = $rowLaporan['total_laporan'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +48,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
+            <img class="rounded-circle animation__wobble" src="../uploads/<?php echo $foto_profil; ?>" alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         <!-- Navbar -->
@@ -40,9 +65,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../backend/app/index3.html" class="brand-link">
-                <img src="../backend/app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">IchsanHanifdeal</span>
+            <a href="dashboard.php" class="brand-link">
+                <img src="../uploads/<?php echo $foto_profil; ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light"><?php echo $username; ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -127,8 +152,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Mata Kuliah</span>
                                     <span class="info-box-number">
-                                        10
-                                        <small>%</small>
+                                        <?php echo $jumlahMatakuliah ?>
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -142,8 +166,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Mahasiswa</span>
                                     <span class="info-box-number">
-                                        10
-                                        <small>%</small>
+                                       <?php echo $jumlahMahasiswa ?>
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -157,8 +180,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Laporan</span>
                                     <span class="info-box-number">
-                                        10
-                                        <small>%</small>
+                                       <?php echo $jumlahLaporan ?>
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -227,16 +249,23 @@
     <script src="../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../backend/app/dist/js/pages/dashboard2.js"></script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQqCVzh9CHvZAJrfAoR-mVZD-dZxap2Xo&callback=initMap" async defer></script>
 
     <script>
-        var map = L.map('map').setView([0.47697761062940236, 101.38042941536337], 100);
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 0.47634959444839176, lng: 101.38091487979919},
+                zoom: 20
+            });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            var infowindow = new google.maps.InfoWindow({
+                content: '<b>Universitas Riau Panam</b><br>Lokasi Universitas Riau Panam.'
+            });
 
-        L.marker([0.47697761062940236, 101.38042941536337]).addTo(map)
-            .bindPopup("<b>Universitas Riau Panam</b><br>Lokasi Universitas Riau Panam.");
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
