@@ -1,4 +1,4 @@
-# Absensi UNRI dengan GPS dan Google Maps API
+# Absensi Universitas dengan GPS dan Google Maps API
 
 Repository ini berisi aplikasi absensi untuk Universitas yang dilengkapi dengan fitur GPS dan menggunakan Google Maps API. Aplikasi ini dikembangkan menggunakan bahasa pemrograman PHP dan memanfaatkan layanan Google Maps API untuk menangani lokasi geografis.
 
