@@ -67,16 +67,16 @@ $foto_profil = $row['foto_profil'];
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="../absensi/absensi.php" class="nav-link">
+                            <li class="nav-item menu-open">
+                                <a href="Absensi.php" class="nav-link active">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         Absensi
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item menu-open">
-                                <a href="laporan.php" class="nav-link active">
+                            <li class="nav-item">
+                                <a href="../laporan/laporan.php" class="nav-link">
                                     <i class="nav-icon fas fa-file"></i>
                                     <p>
                                         Laporan
@@ -97,13 +97,25 @@ $foto_profil = $row['foto_profil'];
             </div>
         </aside>
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">AMBIL ABSEN</h1>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
             <section class="content">
                 <div class="container-fluid">
-
+                    
                 </div>
-            </section>
+            </div>
+        </section>
             <footer class="main-footer">
                 <strong>Copyright &copy; 2023<a href="instagram.com"> Ichsan Hanifdeal</a>.</strong>
             </footer>
@@ -129,6 +141,24 @@ $foto_profil = $row['foto_profil'];
     <script src="../backend/app/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../backend/app/dist/js/pages/dashboard2.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQqCVzh9CHvZAJrfAoR-mVZD-dZxap2Xo&callback=initMap" async defer></script>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 0.47634959444839176, lng: 101.38091487979919},
+                zoom: 20
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: '<b>Universitas Riau Panam</b><br>Lokasi Universitas Riau Panam.'
+            });
+
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
 
 </body>
 

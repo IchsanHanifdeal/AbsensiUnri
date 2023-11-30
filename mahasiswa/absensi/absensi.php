@@ -97,13 +97,74 @@ $foto_profil = $row['foto_profil'];
             </div>
         </aside>
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">MATA KULIAH | ABSENSI UNRI</h1>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
             <section class="content">
                 <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Mata Kuliah</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Mata Kuliah</th>
+                                                <th class="text-center">Jumlah Mahasiswa</th>
+                                                <th class="text-center">Opsi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $no = 1;
+                                            $sqld = "SELECT * FROM matakuliah";
+                                            $resultd = mysqli_query($conn, $sqld);
 
+                                            if ($resultd && mysqli_num_rows($resultd) > 0) {
+                                                while ($rowd = mysqli_fetch_assoc($resultd)) {
+                                                    $idMatakuliah = $rowd['id_matkul'];
+                                                    $matakuliah = $rowd['nama'];
+                                                    $jumlah = $rowd['jumlah_mahasiswa'];
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo $no++ ?></td>
+                                                        <td><?php echo $matakuliah ?></td>
+                                                        <td class="text-center"><?php echo $jumlah ?></td>
+                                                        <td class="text-center">
+                                                            <a href="ambilAbsen.php?id_matkul=<?php echo $idMatakuliah; ?>" class="btn btn-primary">
+                                                                <i class="fas fa-marker"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='3'>Tidak ada data.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
             <footer class="main-footer">
                 <strong>Copyright &copy; 2023<a href="instagram.com"> Ichsan Hanifdeal</a>.</strong>
             </footer>
